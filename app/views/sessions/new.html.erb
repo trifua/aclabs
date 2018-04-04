@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-lg-12">
+		<h1>Log In</h1>
+		<div class="depot_form">
+			<% if flash[:alert] %>
+				<p id="notice" style="color: red;"> flash[:alert] %></p>
+			<% end %>
+			<%= form_tag do %>
+				<fieldset>
+					<legend >Please Log In</legend>
+
+					<div>
+						<%= label_tag :name, 'Name: ' %>
+						<br>
+						<%= text_field_tag :name %>
+					</div>
+
+					<br>
+
+					<div>
+						<%= label_tag :password, 'Password: ' %>
+						<br>
+						<%= text_field_tag :password, '', :type => "password" %>
+					</div>
+
+					<br>
+
+					<div>
+						<%= submit_tag 'Login', :class => "btn btn-primary" %>
+					</div>
+
+					<br>
+
+					<div>
+						<p style="color: gray;">If you don't have an account please <%= link_to 'Sign Up', signup_url %></p>
+					</div>
+
+				</fieldset>
+			<% end %>
+		</div>
+	</div>
+</div>
