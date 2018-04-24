@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
-def new
-	authorize
-end
-
+    before_action :authorize
+    def new
+        
+    end
 end
