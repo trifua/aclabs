@@ -1,5 +1,5 @@
 class CurrenciesController < ApplicationController
-  before_action :set_currency, only: [:buy, :show, :edit, :update, :destroy]
+  before_action :set_currency, only: [ :open, :buy, :show, :edit, :update, :destroy]
 
   # GET /currencies
   # GET /currencies.json
@@ -17,8 +17,16 @@ class CurrenciesController < ApplicationController
     @currency = Currency.new
   end
 
+  def open_modal
+
+    @amount= params[:quantity].to_i
+
+    render :partial => 'render_modal'
+  end
+
   # GET /currencies/1/edit
   def edit
+
   end
 
   # POST /currencies
@@ -82,4 +90,5 @@ class CurrenciesController < ApplicationController
     def currency_params
       params.require(:currency).permit(:name, :symbol, :default)
     end
+
 end
