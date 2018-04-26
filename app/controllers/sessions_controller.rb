@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
-	# GET
+before_action :verify_user, :only => :new
+
 	def new
-		if session[:user_id] then redirect_to '/welcome' end
+
 	end
 
-	# POST
 	def create
 		user = User.find_by(name: params[:name])
 		if user && user.authenticate(params[:password])
@@ -12,12 +12,19 @@ class SessionsController < ApplicationController
 			redirect_to '/welcome'
 		else
 			redirect_to '/login', alert: 'Invalid user'
-		end
+		end	
+
 	end
 
-	# /logout
 	def destroy
 		session[:user_id] = nil
 		redirect_to '/login'
 	end
+
+	private
+
+	def verify_user
+		redirect_to '/welcome' unless !current_user 
+	end
+
 end

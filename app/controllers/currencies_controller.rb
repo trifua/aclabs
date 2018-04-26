@@ -1,5 +1,6 @@
 class CurrenciesController < ApplicationController
-  before_action :set_currency, only: [ :open, :buy, :show, :edit, :update, :destroy]
+  before_action :authorize
+  before_action :set_currency, only: [:open_modal, :buy, :show, :edit, :update, :destroy]
 
   # GET /currencies
   # GET /currencies.json
@@ -12,21 +13,29 @@ class CurrenciesController < ApplicationController
   def show
   end
 
+  def buy
+    amount = params[:amount]
+    Ammount.create(
+      currency_id: @currency.id,
+      quantity: amount,
+      user_id: current_user.id
+      )
+    redirect_to currencies_path, notice: 'Successfully bought some coins!'
+  end
+
   # GET /currencies/new
   def new
     @currency = Currency.new
   end
 
   def open_modal
-
-    @amount= params[:quantity].to_i
+    @ammount = params[:quantity].to_i
 
     render :partial => 'render_modal'
   end
 
   # GET /currencies/1/edit
   def edit
-
   end
 
   # POST /currencies
@@ -69,17 +78,6 @@ class CurrenciesController < ApplicationController
     end
   end
 
-
-  def buy
-    amount = params[:amount]
-    Amount.create(
-      currency_id: @currency.id,
-      quantity: amount,
-      user_id: current_user.id
-    )
-    redirect_to currencies_path, notice: "Successfully bought some coins"
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_currency
@@ -90,5 +88,7 @@ class CurrenciesController < ApplicationController
     def currency_params
       params.require(:currency).permit(:name, :symbol, :default)
     end
-
+    def verify_user
+  redirect_to '/login' unless current_user 
+end
 end

@@ -1,9 +1,8 @@
-<nav class="navbar navbar-default">
-    <form class="navbar-form navbar-left">
-        <div class="form-group">
-            <p class="navbar-text">Welcome <%= current_user.name %>.</p>
-            <a href="/logout" type="button" class="btn btn-danger">Logout</a>
-        </div>
-        <p class="navbar-text navbar-right"><i>User created <%= current_user.created_at %></i></p>
-    </form>
-</nav>
+<h1> Welcome, <%= @user.name %> ! </h1>
+
+<p> Your account was created on <%= @user.created_at %> </p>
+
+<p><%= link_to 'Log out', logout_url %></p>
+
+<p><%= link_to 'Your currencies', currencies_path %></p>
+

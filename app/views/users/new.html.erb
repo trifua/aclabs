@@ -1,31 +1,53 @@
-<div class="card card-body bg-info text-center">
-	<h1>New User</h1>
-	<% if flash[:alert] %>
-		<p id="notice">
-			<%= flash[:alert]%>
-		</p>
+<h1>New User</h1>
+<% if flash[:alert] %>
+	<p id="notice"><%= flash[:alert] %></p>
 	<% end %>
-	<%= form_with(model: @user, url: '/signup') do |form| %>
-		<fieldset>
-			<legend>Enter User Details</legend>
-			<div class="form-group">
-				<%= form.label :name %>
-					<%= form.text_field :name, id: :user_name, :class => 'form-control text-center' %>
-			</div>
+<div class='row'>
+<div class='col-xs-12'>
 
-			<div class="form-group">
-				<%= form.label :password %>
-					<%= form.password_field :password, id: :user_password, :class => 'form-control text-center' %>
-			</div>
+<%= form_with(model: @user, url:'/signup', :html => {class: "form-horizontal", role: "form"}) do |form| %>
+	 <div class="form-group">
 
-			<div class="form-group">
-				<%= form.label :password_confirmation %>
-					<%= form.password_field :password_confirmation, id: :user_password_confirmation, :class => 'form-control text-center' %>
-			</div>
+<div class="control-label col-sm-2">
 
-			<div class="form-group">
-				<%= form.submit  'Sign Up', :class => 'btn btn-success' %>
+			<%= form.label :name %>
+			 </div>
+
+<div class="col-sm-8">
+			<%= form.text_field :name, id: :user_name, class: "form-control",autofocus: true  %>
+ </div>
+
+</div>
+
+ <div class="form-group">
+
+<div class="control-label col-sm-2">
+			<%= form.label :password %>
 			</div>
-		</fieldset>
-	<% end %>
+			<div class="col-sm-8">
+			<%= form.password_field :password, id: :user_password, class: "form-control"%>
+ </div>
+
+</div>
+
+ <div class="form-group">
+
+<div class="control-label col-sm-2">
+
+			<%= form.label :password_confirmation %>
+		</div>
+		<div class="col-sm-8">
+			<%= form.password_field :password_confirmation, id: :user_password_confirmation, class: "form-control" %>
+ </div>
+
+</div>
+
+		 <div class="form-group">
+
+<div class="col-sm-offset-2 col-sm-10">
+			<%= form.submit class: 'btn btn-primary btn-lg'%>
+		</div>
+</div>
+<% end %>
+</div>
 </div>
