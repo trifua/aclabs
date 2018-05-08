@@ -7,6 +7,10 @@ Rails.application.routes.draw do
     member do
       post 'buy', to: 'currencies#buy'
       get 'open_modal', to: 'currencies#open_modal'
+
+    end
+    collection do
+      get 'generate_chart', to:'currencies#generate_chart'
     end
   end
 

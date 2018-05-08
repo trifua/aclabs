@@ -97,7 +97,7 @@ class CurrenciesController < ApplicationController
             paid_entry.update_attributes(quantity: new_quantity)
         end
     end
-    
+
 
     redirect_to currencies_path, notice: 'Successfully bought coins'
   end
@@ -110,7 +110,14 @@ class CurrenciesController < ApplicationController
     render :partial => 'render_modal'
   end
 
-
+  def generate_chart
+    final_array=[]
+    current_user.amounts.each do |amount|
+      value=amount.currency
+      final_array<<[value.name, amount.quantity*value.price]
+    end
+    render json: { owned_currencies: final_array}
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

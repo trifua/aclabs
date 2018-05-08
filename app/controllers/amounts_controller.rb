@@ -62,6 +62,7 @@ class AmountsController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_amount
@@ -72,4 +73,6 @@ class AmountsController < ApplicationController
     def amount_params
       params.require(:amount).permit(:user_id, :quantity, :currency_id)
     end
+
+
 end

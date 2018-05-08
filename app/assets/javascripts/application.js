@@ -15,4 +15,6 @@
 //= require bootstrap
 //= require rails-ujs
 //= require turbolinks
+//= reqire C3/c3.min.js
+//= reqire C3/c3-4.13.0.min.js
 //= require_tree .
