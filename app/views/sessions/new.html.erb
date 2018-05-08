@@ -1,29 +1,39 @@
-<div class="card card-body alert-info text-center">
+
+<div class='jumbotron'>
+
+<div class="card card-body bg-default">
+
 	<% if flash[:alert] %>
-	<p id = "notice"><%= flash[:alert] %></p>
+		<div class="alert alert-info" role="alert">
+			<p id="notice"> <%= flash[:alert] %> </p>
+		</div>
 	<% end %>
+
+
 	<%= form_tag do %>
-	<fieldset>
-		<legend>Please Log in</legend>
-		<div>
-			<%= label_tag :name, 'Name:' %>
-			<%= text_field_tag :name, '', :class => "form-control text-center" %>
-		</div>
+		<fieldset>
+			<legend><h3>Please log in</h3></legend>
 
-		<div>
-			<%= label_tag :password, 'Password:' %>
-			<%= password_field_tag :password, '', :class => "form-control text-center" %>
-		</div>
+			<div class="form-group">
+				<%= label_tag :name, 'Name ' %>
+				<%= text_field_tag :name, '', :class => 'form-control text-left' %>
+			</div>
 
-		<div>
-			<%= submit_tag "Login",  :class => 'btn btn-primary' %>
-		</div>
+			<div class="form-group">
+				<%= label_tag :password, 'Password ' %>
+				<%= password_field_tag :password, '', :class => "form-control text-left" %>
+			</div>
 
-		<div>
-			<p>If you don't have an account please <%= link_to 'Sign Up', signup_url %></p>
-		</div>
+			<div class="form-text text-muted">
+				<p> If you don't have an account please <%= link_to 'Sign Up', signup_url %> </p>
+			</div>
 
-	</fieldset>
+			<div class="form-group">
+				<%= submit_tag "Login", :class => "btn btn-primary" %>
+			</div>
+
+
+		</fieldset>
 	<% end %>
 </div>
-		
+</div>

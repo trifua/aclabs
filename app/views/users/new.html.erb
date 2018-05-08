@@ -1,53 +1,42 @@
-<h1>New User</h1>
+
+<div class='jumbotron'>
+
+<div class="card card-body bg-default">
+
+
 <% if flash[:alert] %>
-	<p id="notice"><%= flash[:alert] %></p>
-	<% end %>
-<div class='row'>
-<div class='col-xs-12'>
-
-<%= form_with(model: @user, url:'/signup', :html => {class: "form-horizontal", role: "form"}) do |form| %>
-	 <div class="form-group">
-
-<div class="control-label col-sm-2">
-
-			<%= form.label :name %>
-			 </div>
-
-<div class="col-sm-8">
-			<%= form.text_field :name, id: :user_name, class: "form-control",autofocus: true  %>
- </div>
-
-</div>
-
- <div class="form-group">
-
-<div class="control-label col-sm-2">
-			<%= form.label :password %>
-			</div>
-			<div class="col-sm-8">
-			<%= form.password_field :password, id: :user_password, class: "form-control"%>
- </div>
-
-</div>
-
- <div class="form-group">
-
-<div class="control-label col-sm-2">
-
-			<%= form.label :password_confirmation %>
-		</div>
-		<div class="col-sm-8">
-			<%= form.password_field :password_confirmation, id: :user_password_confirmation, class: "form-control" %>
- </div>
-
-</div>
-
-		 <div class="form-group">
-
-<div class="col-sm-offset-2 col-sm-10">
-			<%= form.submit class: 'btn btn-primary btn-lg'%>
-		</div>
-</div>
+	<div class="alert alert-info" role="alert">
+		<p id="notice"> <%= flash[:alert] %> </p>
+	</div>
 <% end %>
+
+<%= form_with(model: @user, url: '/signup') do |form| %>
+
+	<fieldset>
+		<legend><h3>Enter user details</h3></legend>
+
+		<div class="form-group">
+			<%= form.label :name %>
+			<%= form.text_field :name, id: :user_name , :class => 'form-control text-left' %>
+		</div>
+
+				<div class="form-group">
+			<%= form.label :password %>
+			<%= form.password_field :password, id: :user_password , :class => 'form-control text-left' %>
+		</div>
+
+				<div class="form-group">
+			<%= form.label :password_confirmation%>
+			<%= form.password_field :password_confirmation, id: :user_password_confirmation , :class => 'form-control text-left' %>
+		</div>
+
+		<div class="actions">
+			<%= form.submit :'Create User', class: 'btn btn-success'  %>
+		</div>
+
+	</fieldset>
+
+<% end %>
+
 </div>
 </div>

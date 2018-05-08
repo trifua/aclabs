@@ -1,26 +1,37 @@
+
+
+
 <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-    <div class="modal-body">
-		<table class = "table">
-			<thead>
-				<th>Price</th>
-				<th>Coin to buy</th>
-				<th>Action</th>
-			</thead>
-			<tbody>
-	    	<% current_user.ammounts.each do |ammount| %>
-	    		<tr>
-	    			<td><%= ammount.currency.name %> <%= @ammount * @currency.price(ammount.currency)  %></td>
-	    			<td><%= @currency.name %> <%= @ammount %></td>
-	    			<td><%= link_to 'Buy', buy_currency_path(@currency, quantity: @ammount) %></td>
-	    		</tr>
-	    	<% end %>
-	    	</tbody>
-    	</table>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    </div>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
   </div>
+
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <th>Price</th>
+        <th>You have</th>
+        <th>Coin</th>
+        <th colspan="3">Action</th>
+      </th>
+      <tbody>
+        <% current_user.amounts.each do |amount| %>
+            <% next if amount.currency.id == @currency.id %>
+                <tr>
+                  <td><%= amount.currency.name %> <%= (@amount.to_f * @currency.price(amount.currency).to_f).round(5) %></td>
+                  <td><%= amount.currency.name %> <%= amount.quantity.to_f %></td>
+                  <td><%= @currency.name %> <%= @amount.to_f %></td>
+                  <td><%= link_to 'Buy', buy_currency_path(@currency, quantity: @amount.to_f, buyer_currency: amount.currency.id, paid: (@amount.to_f * @currency.price(amount.currency).to_f).round(5)),
+                    class: 'btn btn-primary', method: :post, disabled: (@amount.to_f * @currency.price(amount.currency)) > amount.quantity.to_f || @amount.to_f <= 0 %></td>
+                </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>

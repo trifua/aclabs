@@ -1,16 +1,13 @@
 class WelcomeController < ApplicationController
-before_action :verify_user, :only => :new
+	skip_before_action :authorize, only: [:index]
 
-def new
+    def new
+    end
 
-@user = current_user
+  	def create
+  	end
 
-end
-
-private
-
-def verify_user
-  redirect_to '/login' unless current_user 
-end
+    def index
+    end
 
 end

@@ -1,2 +1,12 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<div class='jumbotron'>
+
+<h2>Dashboard</h2>
+
+
+<% if flash[:alert] %>
+	<div class="alert alert-info" role="alert">
+		<p id="notice"> <%= flash[:alert] %> </p>
+	</div>
+<% end %>
+
+</div<
