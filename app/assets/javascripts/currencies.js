@@ -1,27 +1,41 @@
-$( document ).ready(function() {
 
-  $.get("/currencies/generate_chart", function(data){
-    var chart = c3.generate({
-        data: {
-            columns:
-              data["owned_currencies"],
+$(document).ready(function(){
+
+  var chart;
+  var values, old_values;
+
+  function readValues(funct){
+    values = $.get("currencies/generate_chart", funct);
+    return values;
+  }
+
+  //console.log("in generate");
+  function generateChart(data){
+    chart = c3.generate({
+          data: {
+            columns: data.currencies,
             type : 'donut'
         },
-        donut: {
-            title: "Your Currency Portofolio"
+      donut: {
+            title: "Your currencies portfolio"
         }
     });
+  }
 
-  })
-setInterval(
-  $.get("/currencies/generate_chart", function(data){
-    var chart = chart.load({
-        data: {
-            columns:
-              data["owned_currencies"],
-        },
+  readValues(generateChart);
+  old_values = values;
 
+  function updateChart(data){
+    chart.load({
+      columns: data.currencies
     });
+  }
 
-  }),2000)
+  setInterval(function () {
+    if(values != old_values){
+      readValues(updateChart);
+      old_values = values;
+    }
+  }, 3000);
+
 });
