@@ -1,5 +1,5 @@
 class AmountsController < ApplicationController
-  before_action :set_amount, only: [:show, :edit, :update, :destroy]
+  before_action :set_amount, only: %i[show edit update destroy]
   before_action :authorize
 
   # GET /amounts
@@ -10,8 +10,7 @@ class AmountsController < ApplicationController
 
   # GET /amounts/1
   # GET /amounts/1.json
-  def show
-  end
+  def show; end
 
   # GET /amounts/new
   def new
@@ -19,8 +18,7 @@ class AmountsController < ApplicationController
   end
 
   # GET /amounts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /amounts
   # POST /amounts.json
@@ -62,17 +60,15 @@ class AmountsController < ApplicationController
     end
   end
 
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_amount
-      @amount = Amount.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def amount_params
-      params.require(:amount).permit(:user_id, :quantity, :currency_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_amount
+    @amount = Amount.find(params[:id])
+  end
 
-
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def amount_params
+    params.require(:amount).permit(:user_id, :quantity, :currency_id)
+  end
 end

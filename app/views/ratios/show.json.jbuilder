@@ -1,1 +1,1 @@
-json.partial! "ratios/ratio", ratio: @ratio
+json.partial! 'ratios/ratio', ratio: @ratio

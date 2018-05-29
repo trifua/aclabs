@@ -1,4 +1,4 @@
 class Amount < ApplicationRecord
-	belongs_to :user
-	belongs_to :currency
+  belongs_to :user
+  belongs_to :currency
 end

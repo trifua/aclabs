@@ -1,6 +1,6 @@
 class CurrenciesController < ApplicationController
   before_action :authorize
-  before_action :set_currency, only: [:open_modal, :buy, :show, :edit, :update, :destroy]
+  before_action :set_currency, only: %i[open_modal buy show edit update destroy]
 
   # GET /currencies
   # GET /currencies.json
@@ -10,8 +10,7 @@ class CurrenciesController < ApplicationController
 
   # GET /currencies/1
   # GET /currencies/1.json
-  def show
-  end
+  def show; end
 
   # GET /currencies/new
   def new
@@ -19,8 +18,7 @@ class CurrenciesController < ApplicationController
   end
 
   # GET /currencies/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /currencies
   # POST /currencies.json
@@ -62,9 +60,6 @@ class CurrenciesController < ApplicationController
     end
   end
 
-
-
-
   def buy
     amount = params[:amount]
 
@@ -72,61 +67,57 @@ class CurrenciesController < ApplicationController
     quantity_bought = params[:quantity]
     paid_amount = params[:paid]
 
-
-
     bought_entry = Amount.find_by(currency_id: @currency.id, user_id: current_user.id)
     if bought_entry.nil?
-        Amount.create(currency_id: @currency.id, quantity: quantity_bought, user_id: current_user.id)
+      Amount.create(currency_id: @currency.id, quantity: quantity_bought, user_id: current_user.id)
     else
-        current_quantity =  bought_entry.quantity
-        bought_entry.update_attributes(quantity: current_quantity.to_f + quantity_bought.to_f)
+      current_quantity = bought_entry.quantity
+      bought_entry.update_attributes(quantity: current_quantity.to_f + quantity_bought.to_f)
     end
 
     Transaction.create(user_id: current_user.id, original_currency_id: buyer_currency,
-        original_currency_amount: paid_amount, final_currency_id: @currency.id, final_currency_amount: quantity_bought.to_f * paid_amount.to_f)
-
+                       original_currency_amount: paid_amount, final_currency_id: @currency.id, final_currency_amount: quantity_bought.to_f * paid_amount.to_f)
 
     paid_entry = Amount.find_by(currency_id: buyer_currency, user_id: current_user.id)
     if paid_entry.nil?
     else
         current_quantity = paid_entry.quantity
-        new_quantity = current_quantity.to_f - paid_amount.to_f;
+        new_quantity = current_quantity.to_f - paid_amount.to_f
         if new_quantity == 0
-            paid_entry.destroy
+          paid_entry.destroy
         else
-            paid_entry.update_attributes(quantity: new_quantity)
+          paid_entry.update_attributes(quantity: new_quantity)
         end
     end
-
 
     redirect_to currencies_path, notice: 'Successfully bought coins'
   end
 
-
   def open_modal
-    #@currencies = params[:currency_id]
+    # @currencies = params[:currency_id]
     @amount = params[:quantity].to_i
 
-    render :partial => 'render_modal'
+    render partial: 'render_modal'
   end
 
   def generate_chart
-    final_array=[]
+    final_array = []
     current_user.amounts.each do |amount|
-      value=amount.currency
-      final_array<<[value.name, amount.quantity*value.price]
+      value = amount.currency
+      final_array << [value.name, amount.quantity * value.price]
     end
-    render json: { owned_currencies: final_array}
+    render json: { owned_currencies: final_array }
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_currency
-      @currency = Currency.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def currency_params
-      params.require(:currency).permit(:name, :symbol, :default)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_currency
+    @currency = Currency.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def currency_params
+    params.require(:currency).permit(:name, :symbol, :default)
+  end
 end

@@ -15,7 +15,7 @@ $( document ).ready(function() {
   })
 setInterval(
   $.get("/currencies/generate_chart", function(data){
-    var chart = chart.load({
+    var chart = c3.load({
         data: {
             columns:
               data["owned_currencies"],

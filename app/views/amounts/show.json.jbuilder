@@ -1,1 +1,1 @@
-json.partial! "amounts/amount", amount: @amount
+json.partial! 'amounts/amount', amount: @amount
